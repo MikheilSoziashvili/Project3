@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="f8c2b52a-6419-4149-8259-cca85b708828" activeEnvironment="Default" name="REST Project 4" soapui-version="5.6.0" abortOnError="false" runType="SEQUENTIAL" resourceRoot="" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.actions.iface.tools.soapui.TestRunnerAction@values-local"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="Report Format(s)" value=""/>
+  <con:entry key="Host:Port" value=""/>
+  <con:entry key="Export JUnit Results" value="false"/>
+  <con:entry key="Export All" value="false"/>
+  <con:entry key="Save After" value="false"/>
+  <con:entry key="Add Settings" value="false"/>
+  <con:entry key="WSS Password Type" value=""/>
+  <con:entry key="TestSuite" value="TestSuite 1"/>
+  <con:entry key="Endpoint" value=""/>
+  <con:entry key="Select Report Type" value=""/>
+  <con:entry key="System Properties" value=""/>
+  <con:entry key="Password" value=""/>
+  <con:entry key="Print Report" value="false"/>
+  <con:entry key="Open Report" value="false"/>
+  <con:entry key="Export JUnit Results with test properties" value="false"/>
+  <con:entry key="Global Properties" value=""/>
+  <con:entry key="Project Properties" value=""/>
+  <con:entry key="Project Password" value=""/>
+  <con:entry key="TestCase" value="TestCase 1"/>
+  <con:entry key="Username" value=""/>
+  <con:entry key="user-settings.xml Password" value=""/>
+  <con:entry key="TestRunner Path" value=""/>
+  <con:entry key="Environment" value="Default"/>
+  <con:entry key="Coverage Report" value="false"/>
+  <con:entry key="Enable UI" value="false"/>
+  <con:entry key="Root Folder" value=""/>
+  <con:entry key="Ignore Errors" value="false"/>
+  <con:entry key="Domain" value=""/>
+  <con:entry key="Tool Args" value=""/>
+  <con:entry key="Save Project" value="false"/>
+</xml-fragment>]]></con:setting></con:settings><con:interface xsi:type="con:RestService" id="cbdbed9b-61ba-4295-a4e8-70348305fa20" wadlVersion="http://wadl.dev.java.net/2009/02" name="https://demoqa.com" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>https://demoqa.com</con:endpoint></con:endpoints><con:resource name="Books" path="/BookStore/v1/Books" id="96dc268f-62f1-40a6-abce-10059e7691ab"><con:settings/><con:parameters/><con:method name="Books 1" id="2d014e64-84e7-47fa-9d74-b986e12d638a" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:book="https://demoqa.com/BookStore/v1/Books">book:Response</con:element></con:representation><con:request name="Request 1" id="414efccb-bf1e-4d28-a00b-f83610ce4723" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://demoqa.com</con:endpoint><con:request/><con:originalUri>https://demoqa.com/BookStore/v1/Books</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:testSuite id="4e44e592-7dd9-4a69-b2a8-ffd791f9e689" name="TestSuite 1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="8e3a481e-f2e7-45a1-abf0-9803332b7098" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true"><con:settings/><con:testStep type="restrequest" name="BooksRequest" id="c9459ebf-c321-4971-8740-0d59aeddbec0"><con:settings/><con:config service="https://demoqa.com" resourcePath="/BookStore/v1/Books" methodName="Books 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="BooksRequest" id="414efccb-bf1e-4d28-a00b-f83610ce4723" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://demoqa.com</con:endpoint><con:request/><con:originalUri>https://demoqa.com/BookStore/v1/Books</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="InsertFirstRow" id="57d828f0-e50e-4ce6-b8e7-3084f77bf045"><con:settings/><con:config><script>def slurper = new groovy.json.JsonSlurper()
+def response = slurper.parseText(testRunner.testCase.testSteps['BooksRequest'].getProperty("response").getValue())
+
+testRunner.testCase.setPropertyValue( "isbn", response.books[0].isbn.toString() )
+testRunner.testCase.setPropertyValue( "title", response.books[0].title.toString() )
+testRunner.testCase.setPropertyValue( "subTitle", response.books[0].subTitle.toString() )
+testRunner.testCase.setPropertyValue( "author", response.books[0].author.toString() )
+testRunner.testCase.setPropertyValue( "publish_date", response.books[0].publish_date.toString() )
+testRunner.testCase.setPropertyValue( "publisher", response.books[0].publisher.toString() )
+testRunner.testCase.setPropertyValue( "pages", response.books[0].pages.toString() )
+testRunner.testCase.setPropertyValue( "desc", response.books[0].description.toString() )
+testRunner.testCase.setPropertyValue( "web", response.books[0].website.toString() )</script></con:config></con:testStep><con:testStep type="jdbc" name="JDBC" id="bae1526e-c2e8-4fdf-acc0-336b49468925"><con:settings/><con:config xsi:type="con:JdbcRequestTestStep" convertColumnNamesToUpperCase="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</con:driver><con:connectionString>jdbc:sqlserver://localhost;username=TestAutomation;password=TestAutomation123;databaseName=books</con:connectionString><con:query>insert into [dbo].[books] ([isbn],[title],[subTitle],[author],[publish_date],[publisher],[pages],[description],[website])
+OUTPUT Inserted.*
+values (:ISBN, :title, :sub, :author, :publish_date, :publisher, :pages, :desc, :website)</con:query><con:storedProcedure>false</con:storedProcedure><con:assertion type="Simple Contains" id="abc89801-8302-4dc6-bdaa-da93d8c161eb" name="isbn"><con:configuration><token>${#TestCase#isbn}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="bc222fb6-e715-4ff5-a257-150628c8ac3f" name="title"><con:configuration><token>${#TestCase#title}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="975398a2-1e4f-4449-9049-cb14acae0afd" name="subTitle"><con:configuration><token>${#TestCase#subTitle}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="5b26f109-863a-44de-8a10-9415d6d2b64b" name="author"><con:configuration><token>${#TestCase#author}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="e8319311-02da-492c-9377-18477bda885b" name="date"><con:configuration><token>${#TestCase#publish_date}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="39ba273e-4b0e-4243-8b29-1303e9221eee" name="publisher"><con:configuration><token>${#TestCase#publisher}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="014c99e1-3f99-4950-996c-8781842ae3be" name="pages"><con:configuration><token>${#TestCase#pages}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="d7482577-b121-40d0-a410-81230b6cce3e" name="website"><con:configuration><token>${#TestCase#web}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:properties><con:property><con:name>ISBN</con:name><con:value>${#TestCase#isbn}</con:value></con:property><con:property><con:name>title</con:name><con:value>${#TestCase#title}</con:value></con:property><con:property><con:name>sub</con:name><con:value>${#TestCase#subTitle}</con:value></con:property><con:property><con:name>author</con:name><con:value>${#TestCase#author}</con:value></con:property><con:property><con:name>publish_date</con:name><con:value>${#TestCase#publish_date}</con:value></con:property><con:property><con:name>publisher</con:name><con:value>${#TestCase#publisher}</con:value></con:property><con:property><con:name>pages</con:name><con:value>${#TestCase#pages}</con:value></con:property><con:property><con:name>desc</con:name><con:value>${#TestCase#desc}</con:value></con:property><con:property><con:name>website</con:name><con:value>${#TestCase#web}</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="jdbc" name="ValidateRow" id="b6119db2-a421-4832-8d0e-55a39a6ac9a3" disabled="true"><con:settings/><con:config xsi:type="con:JdbcRequestTestStep" convertColumnNamesToUpperCase="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</con:driver><con:connectionString>jdbc:sqlserver://localhost;username=TestAutomation;password=TestAutomation123;databaseName=books</con:connectionString><con:query>SELECT TOP 1 * FROM [dbo].[books] order by 1 desc</con:query><con:assertion type="Simple Contains" id="0499341d-3687-453f-ab6d-8ece6223632d" name="Contains ISBN" disabled="true"><con:configuration><token>${#TestCase#isbn#0}
+</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="cfac651f-60bf-47a6-9eed-2c14a921c51e" name="Contains Title" disabled="true"><con:configuration><token>${#TestCase#title}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="344c9b34-3edd-4544-aed9-3f34f4c083c3" name="Contains Subtitle" disabled="true"><con:configuration><token>${#TestCase#subTitle}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="a4abc37d-ea84-4e73-a13f-66df539e808c" name="Contains Publish_Date" disabled="true"><con:configuration><token>${#TestCase#publish_date}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="1e426929-1da3-4104-85e8-75dc94e166b8" name="Contains Publisher" disabled="true"><con:configuration><token>${#TestCase#publisher}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="e873303b-d6a8-4f46-a5f3-a43c5042ae4c" name="Contains Pages" disabled="true"><con:configuration><token>${#TestCase#pages#0}
+</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="b0967a93-9090-41ca-b96c-4acf4fc84514" name="Contains Description" disabled="true"><con:configuration><token>${#TestCase#description}</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="9f374fc9-db05-4f06-8a4b-e20612434419" name="Contains Website" disabled="true"><con:configuration><token>${#TestCase#website}
+</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:properties/></con:config></con:testStep><con:testStep type="groovy" name="Script1" id="138a9bd6-d288-4857-9704-d8cbcd0177ce"><con:settings/><con:config><script>def slurper = new groovy.json.JsonSlurper()
+def response = slurper.parseText(testRunner.testCase.testSteps['BooksRequest'].getProperty("response").getValue())
+Random random = new Random()
+
+for (def i = 1; i &lt; response.books.size(); i++) {
+	testRunner.testCase.setPropertyValue( "isbn", response.books[i].isbn.toString() )
+	testRunner.testCase.setPropertyValue( "title", response.books[i].title.toString() )
+	testRunner.testCase.setPropertyValue( "subTitle", response.books[i].subTitle.toString() )
+	testRunner.testCase.setPropertyValue( "author", response.books[i].author.toString() )
+	testRunner.testCase.setPropertyValue( "publish_date", response.books[i].publish_date.toString() )
+	testRunner.testCase.setPropertyValue( "publisher", response.books[i].publisher.toString() )
+	testRunner.testCase.setPropertyValue( "pages", response.books[i].pages.toString() )
+	testRunner.testCase.setPropertyValue( "desc", response.books[i].description.toString() )
+	testRunner.testCase.setPropertyValue( "web", response.books[i].website.toString() )
+
+	runJDBC()
+}
+
+
+def runJDBC() {
+	def tCase = testRunner.testCase.testSuite.testCases["TestCase 1"]
+	def tStep = tCase.testSteps["JDBC"]
+	tStep.run(testRunner, context)
+}
+</script></con:config></con:testStep><con:testStep type="groovy" name="CSV" id="fc52101c-4b79-4fe7-8f36-5ca99abaecfa"><con:settings/><con:config><script>try {
+      def projectPath = new com.eviware.soapui.support.GroovyUtils(context).projectPath
+
+      String folderPath = projectPath + "/SoapUIResults";
+
+      def resultFolder = new File(folderPath);
+
+      if(!resultFolder.exists())
+      {
+        resultFolder.mkdirs();
+      }
+
+      Date d = new Date();
+      def executionDate = d.format("dd-MMM-yyyy HH_mm");
+
+      String subfolderPath1 = folderPath+ "/Request-Response_"+executionDate;
+
+      new File(subfolderPath1).mkdirs();
+
+      String subfolderPath2 = folderPath+ "/CSV Reports";
+
+      new File(subfolderPath2).mkdirs();
+      def reportFile = new File(subfolderPath2, "Report_"+executionDate+".csv");
+
+      if(!reportFile.exists())
+      {
+        reportFile.createNewFile();
+        reportFile.write('"Test Suite","Test Case","Test Step","Step Type","Step Status",'
+                        +'"Result message","Execution Date"');
+      }
+  for(stepResult in testRunner.getResults())
+  {
+    // Retrieve Test Suite name
+   def testSuite = testRunner.testCase.testSuite.name;
+   // Retrieve Test Case name
+   def testCase = testRunner.testCase.name;
+   // Retrieve Test Step
+   def testStep = stepResult.getTestStep();
+   // Retrieve Test Step name
+   def testStepName = testStep.name
+   // Retrieve Test Step type
+   def type = testStep.config.type
+   // Retrieve Test Step status
+   def status = stepResult.getStatus()
+
+   reportFile.append('\n');
+
+   reportFile.append('"' + testSuite + '",');
+   reportFile.append('"' + testCase + '",');
+   reportFile.append('"' + testStepName + '",');
+   reportFile.append('"' + type + '",');
+   reportFile.append('"' + status + '",');
+   reportFile.append('"');
+   for(resMessage in stepResult.getMessages())
+   {
+     reportFile.append('Message:' + resMessage + '\n');
+   }
+   reportFile.append('",');
+
+   reportFile.append('"' + executionDate + '",');
+        if((type=="request").or(type=="restrequest"))
+        {
+          def extRequest = testStep.properties["Request"].value;    
+
+      def requestFile=subfolderPath1+"/request_"+testSuite+"_"+testCase+"_"+testStepName+".txt";
+      def rqfile = new File(requestFile);
+      rqfile.write(extRequest, "UTF-8");
+
+      def extResponse = stepResult.getResponseContent();    
+
+      def responseFile=subfolderPath1+"/response_"+testSuite+"_"+testCase+"_"+testStepName+".txt";
+      def rsfile = new File(responseFile);
+      rsfile.write(extResponse, "UTF-8");
+     }
+   }
+ }
+catch(exc)
+{
+   log.error("Exception happened: " + exc.toString());
+}</script></con:config></con:testStep><con:properties><con:property><con:name>isbn</con:name><con:value>9781593277574</con:value></con:property><con:property><con:name>title</con:name><con:value>Understanding ECMAScript 6</con:value></con:property><con:property><con:name>subTitle</con:name><con:value>The Definitive Guide for JavaScript Developers</con:value></con:property><con:property><con:name>author</con:name><con:value>Nicholas C. Zakas</con:value></con:property><con:property><con:name>publish_date</con:name><con:value>2016-09-03T00:00:00.000Z</con:value></con:property><con:property><con:name>publisher</con:name><con:value>No Starch Press</con:value></con:property><con:property><con:name>pages</con:name><con:value>352</con:value></con:property><con:property><con:name>desc</con:name><con:value>ECMAScript 6 represents the biggest update to the core of JavaScript in the history of the language. In Understanding ECMAScript 6, expert developer Nicholas C. Zakas provides a complete guide to the object types, syntax, and other exciting changes that E</con:value></con:property><con:property><con:name>web</con:name><con:value>https://leanpub.com/understandinges6/read</con:value></con:property><con:property><con:name>numberOfIterations</con:name><con:value xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/></con:property></con:properties></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>JDBC</con:name><con:value>com.microsoft.sqlserver.jdbc.SQLServerDriver</con:value></con:property><con:property><con:name>DBLink</con:name><con:value>jdbc:sqlserver://localhost;username=TestAutomation;password=TestAutomation123;databaseName=books</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
